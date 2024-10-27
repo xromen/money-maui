@@ -1,0 +1,24 @@
+﻿<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(Routes).Assembly">
+        <Found Context="routeData">
+            <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                <NotAuthorized>
+                    @if (context.User.Identity?.IsAuthenticated == true)
+                    {
+                        <MudAlert Severity="Severity.Error">Извините, но у вас нет доступа к этой странице. Пожалуйста, свяжитесь с администратором, если вы считаете, что это ошибка.</MudAlert>
+                    }
+                    else
+                    {
+                        <RedirectToLogin />
+                    }
+                </NotAuthorized>
+            </AuthorizeRouteView> <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+        </Found>
+        <NotFound>
+            <PageTitle>Страница не найдена</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <MudAlert Severity="Severity.Warning">Извините, но мы не можем найти запрашиваемую страницу. Пожалуйста, проверьте адрес или вернитесь на главную страницу.</MudAlert>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>
